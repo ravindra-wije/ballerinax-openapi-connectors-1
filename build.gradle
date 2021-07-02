@@ -219,7 +219,7 @@ publishing {
         repositories {
             maven {
                 name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/ravindra-wije/ballerinax-openapi-connectors")
+                url = uri("https://maven.pkg.github.com/ravindra-wije/ballerinax-openapi-connectors-1")
                 credentials {
                     username = System.getenv("publishUser")
                     password = System.getenv("publishPAT")

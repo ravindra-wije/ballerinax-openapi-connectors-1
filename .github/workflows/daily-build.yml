@@ -22,7 +22,7 @@ jobs:
           JAVA_OPTS: -DBALLERINA_DEV_COMPILE_BALLERINA_ORG=true
           GRADLE_USER_HOME: ~/.gradle
         run: |
-          ./gradlew build -Prelease=false -Premote=true
+          ./gradlew build -Prelease=false -Premote=true -Ppublishing=false
 
       - name: Publish Github Package
         env:
@@ -32,4 +32,4 @@ jobs:
           publishPAT: ${{ secrets.CONNECTOR_PUBLISH_PAT }}
           JAVA_OPTS: -DBALLERINA_DEV_COMPILE_BALLERINA_ORG=true
         run: |
-          ./gradlew publish    
+          ./gradlew publish -Prelease=false -Premote=true -Ppublishing=true   
