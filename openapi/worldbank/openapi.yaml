@@ -1,0 +1,733 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: World Bank Data API
+  description: World Bank Data
+  x-display:
+    label: World Bank Data Client
+servers:
+  - description: Indicators represent data like total population, gross domestic product, energy use, and many more
+    url: http://api.worldbank.org/v2/
+paths:
+  /country/all/indicator/SP.POP.TOTL:
+    get:
+      tags: ["Population", "Total", "World"]
+      description: "Get population of each country"
+      operationId: getPopulation
+      x-display:
+        label: "Get Population"
+      parameters:
+        - name: date
+          in: query
+          description: "Date-range by year, month or quarter that scopes the result-set."
+          required: false
+          schema:
+            type: string
+          x-display:
+            label: "Date"
+        - name: format
+          in: query
+          description: "Format of the response."
+          required: false
+          schema:
+            type: string
+            default: json
+          x-display:
+            label: "Response Format"
+        - name: page
+          in: query
+          description: "Page number"
+          required: false
+          schema:
+            type: integer
+            default: 1
+          x-display:
+            label: "Page Number"
+        - name: per_page
+          in: query
+          description: "Per page record count"
+          required: false
+          schema:
+            type: integer
+            default: 50
+          x-display:
+            label: "Per Page Record Count"
+      responses:
+        '200':
+          description: "Population of each countries"
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {
+                  "$ref": "#/components/schemas/CountryPopulation"
+                }
+                nullable: true
+
+  /country/{country_code}/indicator/SP.POP.TOTL:
+    get:
+      tags: ["Population", "Total", "Country"]
+      description: "Get population of a country"
+      operationId: getPopulationByCountry
+      x-display:
+        label: "Get Country Population"
+      parameters:
+        - name: country_code
+          in: path
+          description: "Country code (Example- AFG, ALB, LKA)"
+          required: true
+          schema:
+            type: string
+          x-display:
+            label: "Country Code"
+        - name: date
+          in: query
+          description: "Date-range by year, month or quarter that scopes the result-set."
+          required: true
+          schema:
+            type: string
+          x-display:
+            label: "Date"
+        - name: format
+          in: query
+          description: "Format of the response."
+          required: false
+          schema:
+            type: string
+            default: json
+          x-display:
+            label: "Response Format"
+        - name: page
+          in: query
+          description: "Page number"
+          required: false
+          schema:
+            type: integer
+            default: 1
+          x-display:
+            label: "Page Number"
+        - name: per_page
+          in: query
+          description: "Per page record count"
+          required: false
+          schema:
+            type: integer
+            default: 50
+          x-display:
+            label: "Per Page Record Count"
+      responses:
+        '200':
+          description: "Yearly population of the given country"
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {
+                  "$ref": "#/components/schemas/CountryPopulation"
+                }
+                nullable: true
+
+  /country/all/indicator/NY.GDP.MKTP.CD:
+    get:
+      tags: ["GDP", "All Countries"]
+      description: "Get GDP of each country."
+      operationId: getGDP
+      x-display:
+        label: "Get GDP"
+      parameters:
+        - name: date
+          in: query
+          description: "Date-range by year, month or quarter that scopes the result-set."
+          required: false
+          schema:
+            type: string
+          x-displya:
+            label: Date
+        - name: format
+          in: query
+          description: "Format of the response."
+          required: false
+          schema:
+            type: string
+            default: json
+          x-display:
+            label: "Response Format"
+        - name: page
+          in: query
+          description: "Page number"
+          required: false
+          schema:
+            type: integer
+            default: 1
+          x-display:
+            label: "Page Number"
+        - name: per_page
+          in: query
+          description: "Per page record count"
+          required: false
+          schema:
+            type: integer
+            default: 50
+          x-display:
+            label: "Per Page Record Count"
+      responses:
+        '200':
+          description: "GDP of each country"
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {
+                  "$ref": "#/components/schemas/GrossDomesticProduct"
+                }
+                nullable: true
+
+  /country/{country_code}/indicator/NY.GDP.MKTP.CD:
+    get:
+      tags: ["GDP data of a given country"]
+      description: "Get GDP of a country."
+      operationId: getGDPByCountry
+      x-display:
+        label: "Get GDP By Country"
+      parameters:
+        - name: country_code
+          in: path
+          description: "Country code (Example- AFG, ALB, LKA)"
+          required: true
+          schema:
+            type: string
+          x-display:
+            label: Country Code
+        - name: date
+          in: query
+          description: "Date-range by year, month or quarter that scopes the result-set."
+          required: false
+          schema:
+            type: string
+          x-displya:
+            label: Date
+        - name: format
+          in: query
+          description: "Format of the response."
+          required: false
+          schema:
+            type: string
+            default: json
+          x-display:
+            label: "Response Format"
+        - name: page
+          in: query
+          description: "Page number"
+          required: false
+          schema:
+            type: integer
+            default: 1
+          x-display:
+            label: "Page Number"
+        - name: per_page
+          in: query
+          description: "Per page record count"
+          required: false
+          schema:
+            type: integer
+            default: 50
+          x-display:
+            label: "Per Page Record Count"
+      responses:
+        '200':
+          description: "Yearly GDP of the given country"
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {
+                  "$ref": "#/components/schemas/GrossDomesticProduct"
+                }
+                nullable: true
+
+  /country/all/indicator/1.1_ACCESS.ELECTRICITY.TOT:
+    get:
+      tags: ["Access to electricity (% of total population) of countries"]
+      description: "Get percentage of population with access to electricity of countries in the world."
+      operationId: getAccessToElectricityPercentage
+      x-display:
+        label: "Get Population% Having Electricity"
+      parameters:
+        - name: date
+          in: query
+          description: "Date-range by year, month or quarter that scopes the result-set."
+          required: false
+          schema:
+            type: string
+          x-displya:
+            label: Date
+        - name: format
+          in: query
+          description: "Format of the response."
+          required: false
+          schema:
+            type: string
+            default: json
+          x-display:
+            label: "Response Format "
+        - name: page
+          in: query
+          description: "Page number"
+          required: false
+          schema:
+            type: integer
+            default: 1
+          x-display:
+            label: "Page Number"
+        - name: per_page
+          in: query
+          description: "Per page record count"
+          required: false
+          schema:
+            type: integer
+            default: 50
+          x-display:
+            label: "Per Page Record Count"
+      responses:
+        '200':
+          description: "Population percentage having electricity of each country."
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {
+                  "$ref": "#/components/schemas/AccessToElectricity"
+                }
+                nullable: true
+
+  /country/{country_code}/indicator/1.1_ACCESS.ELECTRICITY.TOT:
+    get:
+      tags: ["Access to electricity (% of total population) of the given country"]
+      description: "Get percentage of population with access to electricity of a given country."
+      operationId: getAccessToElectricityPercentageByCountry
+      x-display:
+        label: "Get Population% Having Electricity By Country"
+      parameters:
+        - name: country_code
+          in: path
+          description: "Country code (Example- AFG, ALB, LKA)"
+          required: true
+          schema:
+            type: string
+          x-display:
+            label: "Country Code"
+        - name: date
+          in: query
+          description: "Date-range by year, month or quarter that scopes the result-set."
+          required: false
+          schema:
+            type: string
+          x-displya:
+            label: "Date"
+        - name: format
+          in: query
+          description: "Format of the response."
+          required: false
+          schema:
+            type: string
+            default: json
+          x-display:
+            label: "Response Format"
+        - name: page
+          in: query
+          description: "Page number"
+          required: false
+          schema:
+            type: integer
+            default: 1
+          x-display:
+            label: "Page Number"
+        - name: per_page
+          in: query
+          description: "Per page record count"
+          required: false
+          schema:
+            type: integer
+            default: 50
+          x-display:
+            label: "Per Page Record Count"
+      responses:
+        '200':
+          description: "Yearly population percentage having electricity of the given country."
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {
+                  "$ref": "#/components/schemas/AccessToElectricity"
+                }
+                nullable: true
+
+  /country/all/indicator/1.1_YOUTH.LITERACY.RATE:
+    get:
+      tags: ["Literacy rate, youth total (% of people ages 15-24)"]
+      description: "Get literacy rate of youth (% of people ages 15-24) of countries in the world."
+      operationId: getYouthLiteracyRate
+      x-display:
+        label: "Get Youth Literacy Rate"
+      parameters:
+        - name: date
+          in: query
+          description: "Date-range by year, month or quarter that scopes the result-set."
+          required: false
+          schema:
+            type: string
+          x-display:
+            label: "Date"
+        - name: format
+          in: query
+          description: "Format of the response."
+          required: false
+          schema:
+            type: string
+            default: json
+          x-display:
+            label: "Response Format"
+        - name: page
+          in: query
+          description: "Page number"
+          required: false
+          schema:
+            type: integer
+            default: 1
+          x-display:
+            label: "Page Number"
+        - name: per_page
+          in: query
+          description: "Per page record count"
+          required: false
+          schema:
+            type: integer
+            default: 50
+          x-display:
+            label: "Per Page Record Count"
+      responses:
+        '200':
+          description: "Youth literacy rate of each country."
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {
+                  "$ref": "#/components/schemas/YouthLiteracyRate"
+                }
+                nullable: true
+
+
+  /country/{country_code}/indicator/1.1_YOUTH.LITERACY.RATE:
+    get:
+      tags: ["Literacy rate, youth total (% of people ages 15-24)"]
+      description: "Get literacy rate of youth (% of people ages 15-24) of a country."
+      operationId: getYouthLiteracyRateByCountry
+      x-display:
+        label: "Get Youth Literacy Rate By Country"
+      parameters:
+        - name: country_code
+          in: path
+          description: "Country code (Example- AFG, ALB, LKA)"
+          required: true
+          schema:
+            type: string
+          x-display:
+            label: "Country Code"
+        - name: date
+          in: query
+          description:  "Date-range by year, month or quarter that scopes the result-set."
+          required: false
+          schema:
+            type: string
+          x-display:
+            label: "Date"
+        - name: format
+          in: query
+          description: "Format of the response."
+          required: false
+          schema:
+            type: string
+            default: json
+          x-display:
+            label: "Response Format"
+        - name: page
+          in: query
+          description: "Page number"
+          required: false
+          schema:
+            type: integer
+            default: 1
+          x-display:
+            label: "Page Number"
+        - name: per_page
+          in: query
+          description: "Per page record count"
+          required: false
+          schema:
+            type: integer
+            default: 50
+          x-display:
+            label: "Per Page Record Count"
+      responses:
+        '200':
+          description: "Youth literacy rate of the given country."
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {
+                  "$ref": "#/components/schemas/YouthLiteracyRate"
+                }
+                nullable: true
+
+  /country/all/indicator/UIS.X.PPP.1.FSGOV:
+    get:
+      tags: ["Government expenditure on primary education, PPP$ (millions)"]
+      description: "Get government expenditure on primary education of each country"
+      operationId: getGovernmentExpenditureOnPrimaryEducation
+      x-display:
+        label: "Get Government Expenditure On Education"
+      parameters:
+        - name: date
+          in: query
+          description:  "Date-range by year, month or quarter that scopes the result-set."
+          required: false
+          schema:
+            type: string
+          x-display:
+            label: "Date"
+        - name: format
+          in: query
+          description: "Format of the response."
+          required: false
+          schema:
+            type: string
+            default: json
+          x-display:
+            label: "Response Format "
+        - name: page
+          in: query
+          description: "Page number"
+          required: false
+          schema:
+            type: integer
+            default: 1
+          x-display:
+            label: "Page Number"
+        - name: per_page
+          in: query
+          description: "Per page record count"
+          required: false
+          schema:
+            type: integer
+            default: 50
+          x-display:
+            label: "Per Page Record Count"
+      responses:
+        '200':
+          description: "Government expenditure on primary education of each country."
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {
+                  "$ref": "#/components/schemas/PrimaryEducationExpenditure"
+                }
+                nullable: true
+
+  /country/{country_code}/indicator/UIS.X.PPP.1.FSGOV:
+    get:
+      tags: ["Government expenditure on primary education, PPP$ (millions)"]
+      description: "Get government expenditure on primary education of a country."
+      operationId: getGovernmentExpenditureOnPrimaryEducationByCountry
+      x-display:
+        label: "Get Government Expenditure On Education By Country"
+      parameters:
+        - name: country_code
+          in: path
+          description: "Country code (Example- AFG, ALB, LKA)"
+          required: true
+          schema:
+            type: string
+          x-display:
+            label: "Country Code"
+        - name: date
+          in: query
+          description:  "Date-range by year, month or quarter that scopes the result-set."
+          required: false
+          schema:
+            type: string
+          x-display:
+            label: "Date"
+        - name: format
+          in: query
+          description: "Format of the response."
+          required: false
+          schema:
+            type: string
+            default: json
+          x-display:
+            label: "Response Format"
+        - name: page
+          in: query
+          description: "Page number"
+          required: false
+          schema:
+            type: integer
+            default: 1
+          x-display:
+            label: "Page Number"
+        - name: per_page
+          in: query
+          description: "Per page record count"
+          required: false
+          schema:
+            type: integer
+            default: 50
+          x-display:
+            label: "Per Page Record Count"
+      responses:
+        '200':
+          description: "Government expenditure on primary education of a country."
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {
+                  "$ref": "#/components/schemas/PrimaryEducationExpenditure"
+                }
+                nullable: true
+
+components:
+  schemas:
+    Indicator:
+      type: object
+      description: "Data indicator"
+      properties:
+        id:
+          type: string
+          description: "Id of the indicator"
+          example: SP.POP.TOTL
+        value:
+          type: string
+          description: "Value represent by the indicator"
+          example: Population, total
+
+    Country:
+      type: object
+      description: "Represent a Country"
+      properties:
+        id:
+          type: string
+          description: "Country code"
+          example: CHL
+        value:
+          type: string
+          description: "Country name"
+          example: Chilie
+
+    AccessToElectricity:
+      type: object
+      description: "Represent access to electricity"
+      properties:
+        indicator:
+          "$ref": "#/components/schemas/Indicator"
+          description: "World bank indicator"
+        country:
+          description: "Country"
+          "$ref": "#/components/schemas/Country"
+        date:
+          type: string
+          description: "Date-range by year, month or quarter that scopes the result-set."
+          example: "2016"
+        value:
+          type: number
+          format: double
+          description: "Population percentage having electricity"
+          nullable: true
+          example: 100
+
+    YouthLiteracyRate:
+      type: object
+      description: "Represent youth literacy rate"
+      properties:
+        indicator:
+          "$ref": "#/components/schemas/Indicator"
+          description: "World bank indicator"
+        country:
+          "$ref": "#/components/schemas/Country"
+          description: "Country"
+        date:
+          type: string
+          description: "Date-range by year, month or quarter that scopes the result-set."
+          example: "2016"
+        value:
+          type: number
+          format: double
+          description: "Youth literacy rate"
+          nullable: true
+          example: 100
+
+    GrossDomesticProduct:
+      type: object
+      description: "Represent gross domestic product"
+      properties:
+        indicator:
+          "$ref": "#/components/schemas/Indicator"
+          description: "World bank indicator"
+        country:
+          "$ref": "#/components/schemas/Country"
+          description: "Country"
+        date:
+          type: string
+          description: "Date-range by year, month or quarter that scopes the result-set."
+          example: "2016"
+        value:
+          type: number
+          format: double
+          description: "Gross domestic product"
+          nullable: true
+          example: 100
+
+    PrimaryEducationExpenditure:
+      type: object
+      description: "Represent primary education expenditure"
+      properties:
+        indicator:
+          "$ref": "#/components/schemas/Indicator"
+          description: "World bank indicator"
+        country:
+          "$ref": "#/components/schemas/Country"
+          description: "Country"
+        date:
+          type: string
+          description: "Date-range by year, month or quarter that scopes the result-set."
+          example: "2016"
+        value:
+          type: number
+          format: double
+          description: "Primary education expenditure"
+          nullable: true
+          example: 100
+
+    CountryPopulation:
+      type: object
+      description: "Represent country population."
+      properties:
+        indicator:
+          "$ref": "#/components/schemas/Indicator"
+          description: "World bank indicator"
+        country:
+          "$ref": "#/components/schemas/Country"
+          description: "Country"
+        date:
+          type: string
+          description: "Date-range by year, month or quarter that scopes the result-set."
+          example: "2016"
+        value:
+          type: integer
+          description: "Country population"
+          nullable: true
+          example: 100
